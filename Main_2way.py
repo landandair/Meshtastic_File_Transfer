@@ -19,6 +19,7 @@ def main(interface_1, interface_2):
         time.sleep(1)  # For performance lol
         # Sending update
         Manager_1.update_all()
+        Manager_2.update_all()
         if Queue1:
             name, packet = Queue1.pop(0)
             payload = packet['decoded']['payload']
@@ -34,12 +35,12 @@ def main(interface_1, interface_2):
             else:
                 print(f'Receiver_received {text}')
 
-        if len(Manager_1.transfer_objects) == 0 and not len(Manager_2.transfer_objects) == 0:
+        if len(Manager_1.transfer_objects) == 0 and len(Manager_2.transfer_objects) == 0:
             looping = False
-
+        elif len(Manager_1.transfer_objects) == 0:
+            print(Manager_2.transfer_objects)
     interface_1.close()
     interface_2.close()
-
 
 def onReceive1(packet, interface): # called when a packet arrives
     # print(packet['decoded']['portnum'], interface.getShortName())

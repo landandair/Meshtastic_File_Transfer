@@ -3,7 +3,7 @@ from PIL import Image
 
 
 def compress(image_file):
-    comp_filename = "Images/image-file-compressed.webp"
+    comp_filename = "Files/image-file-compressed.webp"
     filepath = os.path.join(os.getcwd(), image_file)
 
     image = Image.open(filepath)
@@ -25,7 +25,7 @@ def zip_file(file_name):
 
 
 if __name__ == '__main__':
-    filename = 'Images/Image 7.jpeg'
+    filename = 'Files/Image 7.jpeg'
     compress(filename)
     packets = []
     with open('Sending/image-file-compressed.webp', "rb") as fi:

@@ -16,7 +16,7 @@ class FileTransferReceiver:
         self.packet_dict = {}
         self.timeout = timeout
         self.last_packet = time.time()
-        self.progress_bar = tqdm.tqdm(total=num_packets, unit='packets', disable=disable_bar)
+        self.progress_bar = tqdm.tqdm(total=num_packets, unit='packet', disable=disable_bar)
         initial_ack = Packaging_Data.make_status_packet(file_id, 1)  # Make ack array
         self.send_data(bytes(initial_ack))
         self.kill = False
@@ -74,7 +74,7 @@ class FileTransferReceiver:
         check = self.get_missing_nums()
         if len(check) == 0 and not self.saved:
             self.progress_bar.close()
-            with open('Images/'+self.name, 'wb') as fi:
+            with open('Files/'+self.name, 'wb') as fi:
                 for num in range(self.num_packets):
                     fi.write(self.packet_dict[num])
             self.saved = True
@@ -97,7 +97,7 @@ class FileTransferSender:
         self.destination_id = destination_id
         self.packet_queue = []
         self.packet_len = packet_len
-        data_dict = Packaging_Data.split_data('Images/'+file_name, packet_len)  # Unlabeled
+        data_dict = Packaging_Data.split_data('Files/'+file_name, packet_len)  # Unlabeled
         self.data_dict = Packaging_Data.package_data(data_dict, self.id) # Labeled
         self.delay = send_delay
         self.last_send = time.time()
