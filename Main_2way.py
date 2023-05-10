@@ -35,10 +35,8 @@ def main(interface_1, interface_2):
                 print(f'Receiver_received {text}')
 
         if len(Manager_1.transfer_objects) == 0 and not len(Manager_2.transfer_objects) == 0:
-            print('killed')
             looping = False
 
-    print('Wrapping Up')
     interface_1.close()
     interface_2.close()
 
