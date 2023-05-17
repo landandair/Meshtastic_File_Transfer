@@ -14,7 +14,7 @@ Queue1 = []
 
 
 def main(interface_1, interface_2):
-    file_name = 'image-file-compressed.webp'
+    file_name = 'compressed_audio.mp3'
     Manager_1 = FileTransManager(interface_1)  # Sender
     Manager_2 = FileTransManager(interface_2)  # Receiver
     destination_id = interface_2.getMyNodeInfo()['user']['id']
@@ -48,7 +48,7 @@ def main(interface_1, interface_2):
     interface_1.close()
     interface_2.close()
 
-def onReceive1(packet, interface): # called when a packet arrives
+def on_receive(packet, interface): # called when a packet arrives
     # print(packet['decoded']['portnum'], interface.getShortName())
     # print(f'received_1: {packet["decoded"]["payload"]}')
     if packet['decoded']['portnum'] == 'IP_TUNNEL_APP':
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         ports = findPorts(True)
         print(f'Number of Radios: {len(ports)}')
         interface_1 = SerialInterface(devPath=ports[0])
-        pub.subscribe(onReceive1, "meshtastic.receive")
+        pub.subscribe(on_receive, "meshtastic.receive")
         interface_2 = SerialInterface(devPath=ports[1])
         main(interface_1, interface_2)
     except KeyboardInterrupt:

@@ -1,8 +1,9 @@
 import os
 from PIL import Image
+from pydub import AudioSegment
 
 
-def compress(image_file):
+def compress_image(image_file):
     comp_filename = "Files/image-file-compressed.webp"
     filepath = os.path.join(os.getcwd(), image_file)
 
@@ -18,23 +19,24 @@ def compress(image_file):
                quality=0)
     return comp_filename
 
-def zip_file(file_name):
-    with open(file_name, 'rb') as fi:
-        pass
+def compress_audio(audio_file):
+    file_name = "Files/compressed_audio.mp3"
+    audio = AudioSegment.from_file(audio_file)[:22000]
+    audio.export(file_name, format='mp3', parameters=["-ac","1","-ar","8000"])
+    # low_sample_rate = audio.set_frame_rate(1)
+    # low_sample_rate.export(file_name, bitrate="1k", format="mp3")
     return file_name
 
 
 if __name__ == '__main__':
-    filename = 'Files/Image 7.jpeg'
-    compress(filename)
+    filename = 'Files/Rick.mp3'
+    compressed_file = compress_audio(filename)
     packets = []
-    with open('Sending/image-file-compressed.webp', "rb") as fi:
-        packet_size = 237
+    with open(compressed_file, "rb") as fi:
+        packet_size = 232
         buf = fi.read(packet_size)
         while (buf):
             packets.append(buf)
             buf = fi.read(packet_size)
-    print(bin(int(255)))
-    print(packets[0])
     print(len(packets))
 
