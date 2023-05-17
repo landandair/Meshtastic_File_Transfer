@@ -14,7 +14,7 @@ class FileTransferReceiver:
         self.interface = interface
         self.sending_id = sending_id
         self.packet_dict = {}
-        self.timeout = timeout
+        self.timeout = timeout + 10
         self.last_packet = time.time()
         self.progress_bar = tqdm.tqdm(total=num_packets, unit='packet', disable=disable_bar)
         initial_ack = Packaging_Data.make_status_packet(file_id, 1)  # Make ack array
@@ -121,7 +121,7 @@ class FileTransferSender:
             # print(f'sending: {data}')
             self.interface.sendData(bytes(data), portNum=portnums_pb2.IP_TUNNEL_APP, destinationId=self.destination_id,
                                     wantAck=False)
-        elif time.time()-self.last_send > self.delay*3:
+        elif time.time()-self.last_send >= self.delay*10:
             print('failed Send Timeout')
             self.kill = True
 
@@ -150,3 +150,4 @@ class FileTransferSender:
         else:
             print(f'Confirmed File Transfer #{self.id} Complete')
             self.kill = True
+        self.last_send = time.time()

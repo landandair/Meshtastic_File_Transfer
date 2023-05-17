@@ -32,6 +32,7 @@ if __name__ == '__main__':
     filename = 'Files/Rick.mp3'
     compressed_file = compress_audio(filename)
     packets = []
+    print(bytearray('f'.encode('utf-8'))[0])
     with open(compressed_file, "rb") as fi:
         packet_size = 232
         buf = fi.read(packet_size)

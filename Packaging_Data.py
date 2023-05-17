@@ -73,8 +73,6 @@ def make_status_packet(file_id: int, packet_type: int, opt_data: list = []):
     return packet
 
 
-
-
 def send_packets_list_to_file(byte_list: list, file_name='Sending/radio_packets.txt'):
     with open(file_name, "wb") as fi:
         for b_list in byte_list:

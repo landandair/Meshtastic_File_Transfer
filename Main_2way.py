@@ -15,7 +15,7 @@ Queue1 = []
 
 def main(interface_1, interface_2):
     file_name = 'compressed_audio.mp3'
-    Manager_1 = FileTransManager(interface_1)  # Sender
+    Manager_1 = FileTransManager(interface_1, send_delay=4)  # Sender
     Manager_2 = FileTransManager(interface_2)  # Receiver
     destination_id = interface_2.getMyNodeInfo()['user']['id']
     print(f'Starting transfer of {file_name} to {destination_id}')
