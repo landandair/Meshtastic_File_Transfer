@@ -22,7 +22,7 @@ transmitting packet. This cycle will repeat until a com packet is missed or all 
 Also, the file ID number must never be byte(f) or 102 in base 10.
 #Instructions:Main_2way.py
 - Plug in 2 Radios into a computer
-- Type in the File name under 59kb in size locate in the "Files" Folder
+- Type in the File name under 59kb in size located in the "Files" Folder into the file_name string
 - Run Main_2way.py
 - Make sure the number of radios is 2 in the console as this may take a while to be the case
 - Progress Bar should show up and begin filling if everything is working properly
