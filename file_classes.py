@@ -156,6 +156,7 @@ class FileTransferSender:
             self.progress_bar.close()
             self.progress_bar = tqdm.tqdm(total=len(self.packet_queue), unit='packet', disable=self.disable_bar)
         else:
+            self.progress_bar.close()
             print(f'Confirmed File Transfer #{self.id} Complete')
             self.kill = True
         self.last_send = time.time()

@@ -1,6 +1,6 @@
 """Land_and_air
 Connect 2 Radios to the USB ports running meshtastic and then run the file. A progress bar should show up
-100%|██████████| 21/21 [02:50<00:00,  8.14s/packet] (ex. progress bar)
+100%|██████████| 36/36 [02:52<00:00,  4.79s/packet] (ex. progress bar)
 """
 
 
