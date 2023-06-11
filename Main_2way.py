@@ -14,7 +14,7 @@ Queue1 = []
 
 
 def main(interface_1, interface_2):
-    file_name = 'compressed_audio.mp3'
+    file_name = 'image-file-compressed.webp'
     Manager_1 = FileTransManager(interface_1, send_delay=4)  # Sender
     Manager_2 = FileTransManager(interface_2)  # Receiver
     destination_id = interface_2.getMyNodeInfo()['user']['id']

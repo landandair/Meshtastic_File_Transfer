@@ -90,7 +90,8 @@ class FileTransferReceiver:
 class FileTransferSender:
     """Class used to communicate and send files with a desired target. Sends Initial Packet, receives ack packets and
     sends packets and a confirmation packet at the end."""
-    def __init__(self, file_name, file_id: int, interface, destination_id, send_delay=10, packet_len=232):
+    def __init__(self, file_name, file_id: int, interface, destination_id, send_delay=10, packet_len=232,
+                 disable_bar=True):
         self.name = file_name
         self.id = file_id  # 0 Reserved for file meta packets
         self.interface = interface
@@ -106,6 +107,9 @@ class FileTransferSender:
         self.kill = False
         # Send initial Req packet
         self.send_initial()
+        self.disable_bar = disable_bar
+        self.progress_bar = tqdm.tqdm(total=len(data_dict)+1, unit='packet', disable=self.disable_bar)
+        self.progress_bar.update()
 
     def send_initial(self):
         # Sends initial packet
@@ -121,6 +125,8 @@ class FileTransferSender:
             # print(f'sending: {data}')
             self.interface.sendData(bytes(data), portNum=portnums_pb2.IP_TUNNEL_APP, destinationId=self.destination_id,
                                     wantAck=False)
+            self.progress_bar.update()
+
         elif time.time()-self.last_send >= self.delay*10:
             print('failed Send Timeout')
             self.kill = True
@@ -147,6 +153,8 @@ class FileTransferSender:
             for num in needed_packets:
                 self.packet_queue.append(self.data_dict[num])
             self.packet_queue.append(Packaging_Data.make_status_packet(self.id, 2))
+            self.progress_bar.close()
+            self.progress_bar = tqdm.tqdm(total=len(self.packet_queue), unit='packet', disable=self.disable_bar)
         else:
             print(f'Confirmed File Transfer #{self.id} Complete')
             self.kill = True

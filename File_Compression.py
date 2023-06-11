@@ -22,9 +22,7 @@ def compress_image(image_file):
 def compress_audio(audio_file):
     file_name = "Files/compressed_audio.mp3"
     audio = AudioSegment.from_file(audio_file)[:22000]
-    audio.export(file_name, format='mp3', parameters=['-c','mpeg2video',"-ac","1","-ar","8000"])
-    # low_sample_rate = audio.set_frame_rate(1)
-    # low_sample_rate.export(file_name, bitrate="1k", format="mp3")
+    audio.export(file_name, format='mp3', parameters=["-ac","1","-ar","8000"])
     return file_name
 
 
