@@ -9,20 +9,20 @@ def compress_image(image_file):
 
     image = Image.open(filepath)
 
-    base_width = 640
+    base_width = 540
     width_percent = (base_width / float(image.size[0]))
     hsize = int(float(image.size[1]) * float(width_percent))
     image = image.resize((base_width, hsize))
     image.save(comp_filename,
                "webp",
                optimize=True,
-               quality=0)
+               quality=15)
     return comp_filename
 
 def compress_audio(audio_file):
     file_name = "Files/compressed_audio.mp3"
     audio = AudioSegment.from_file(audio_file)[:22000]
-    audio.export(file_name, format='mp3', parameters=["-ac","1","-ar","8000"])
+    audio.export(file_name, format='mp3', parameters=['-c','mpeg2video',"-ac","1","-ar","8000"])
     # low_sample_rate = audio.set_frame_rate(1)
     # low_sample_rate.export(file_name, bitrate="1k", format="mp3")
     return file_name
@@ -39,5 +39,5 @@ if __name__ == '__main__':
         while (buf):
             packets.append(buf)
             buf = fi.read(packet_size)
-    print(len(packets))
+    print(f'{len(packets)*4.5/60} minutes')
 
