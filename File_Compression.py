@@ -21,7 +21,7 @@ def compress_image(image_file):
 
 def compress_audio(audio_file):
     file_name = "Files/compressed_audio.mp3"
-    audio = AudioSegment.from_file(audio_file)[:22000]
+    audio = AudioSegment.from_file(audio_file)[:58000]
     audio.export(file_name, format='mp3', parameters=["-ac","1","-ar","8000"])
     return file_name
 
@@ -30,12 +30,12 @@ if __name__ == '__main__':
     filename = 'Files/Rick.mp3'
     compressed_file = compress_audio(filename)
     packets = []
-    print(bytearray('f'.encode('utf-8'))[0])
     with open(compressed_file, "rb") as fi:
         packet_size = 232
         buf = fi.read(packet_size)
         while (buf):
             packets.append(buf)
             buf = fi.read(packet_size)
+    print(f'{len(packets)}: packets')
     print(f'{len(packets)*4.5/60} minutes')
 

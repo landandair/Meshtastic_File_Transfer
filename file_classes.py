@@ -127,7 +127,7 @@ class FileTransferSender:
                                     wantAck=False)
             self.progress_bar.update()
 
-        elif time.time()-self.last_send >= self.delay*10:
+        elif time.time()-self.last_send >= self.delay*20:
             print('failed Send Timeout')
             self.kill = True
 
