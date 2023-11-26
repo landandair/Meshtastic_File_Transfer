@@ -1,3 +1,4 @@
+import os
 import time
 import Packaging_Data
 from meshtastic import portnums_pb2
@@ -20,6 +21,7 @@ class FileTransferReceiver:
         initial_ack = Packaging_Data.make_status_packet(file_id, 1)  # Make ack array
         self.send_data(bytes(initial_ack))
         self.kill = False
+        self.finished = False
         self.saved = False
 
     def update(self):
@@ -74,10 +76,12 @@ class FileTransferReceiver:
         check = self.get_missing_nums()
         if len(check) == 0 and not self.saved:
             self.progress_bar.close()
-            with open('Files/'+self.name, 'wb') as fi:
+            os.makedirs(os.path.dirname(self.name), exist_ok=True)
+            with open(self.name, 'wb') as fi:
                 for num in range(self.num_packets):
                     fi.write(self.packet_dict[num])
-            self.saved = True
+            self.finished = True
+            self.saved = self.finished
             return True
         return False
 
@@ -98,13 +102,15 @@ class FileTransferSender:
         self.destination_id = destination_id
         self.packet_queue = []
         self.packet_len = packet_len
-        data_dict = Packaging_Data.split_data('Files/'+file_name, packet_len)  # Unlabeled
+        data_dict = Packaging_Data.split_data(file_name, packet_len)  # Unlabeled
         self.data_dict = Packaging_Data.package_data(data_dict, self.id) # Labeled
         self.delay = send_delay
+        self.packet_num = len(self.data_dict)
         self.last_send = time.time()
         # Modes- 0: Send Initial Packet, 2:Send Data, 3:Send Finish
         self.mode = 0
         self.kill = False
+        self.finished = False
         # Send initial Req packet
         self.send_initial()
         self.disable_bar = disable_bar
@@ -127,8 +133,10 @@ class FileTransferSender:
                                     wantAck=False)
             self.progress_bar.update()
 
-        elif time.time()-self.last_send >= self.delay*20:
+        elif time.time()-self.last_send >= self.delay*self.packet_num:
+            print(time.time() - self.last_send)
             print('failed Send Timeout')
+
             self.kill = True
 
     def manage_com_packet(self, packet: bytearray):
@@ -158,5 +166,6 @@ class FileTransferSender:
         else:
             self.progress_bar.close()
             print(f'Confirmed File Transfer #{self.id} Complete')
+            self.finished = True
             self.kill = True
         self.last_send = time.time()
