@@ -4,7 +4,7 @@ from pydub import AudioSegment
 
 
 def compress_image(image_file):
-    comp_filename = "Files/image-file-compressed.webp"
+    comp_filename = "Sender/Files/image-file-compressed.webp"
     filepath = os.path.join(os.getcwd(), image_file)
 
     image = Image.open(filepath)
@@ -20,14 +20,14 @@ def compress_image(image_file):
     return comp_filename
 
 def compress_audio(audio_file):
-    file_name = "Files/compressed_audio.mp3"
+    file_name = "Sender/Files/compressed_audio.mp3"
     audio = AudioSegment.from_file(audio_file)[:58000]
     audio.export(file_name, format='mp3', parameters=["-ac","1","-ar","8000"])
     return file_name
 
 
 if __name__ == '__main__':
-    filename = 'Files/Rick.mp3'
+    filename = 'Sender/Files/Rick.mp3'
     compressed_file = compress_audio(filename)
     packets = []
     with open(compressed_file, "rb") as fi:

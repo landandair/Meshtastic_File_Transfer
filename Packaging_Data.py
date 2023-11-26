@@ -39,7 +39,7 @@ def send_packets_dict_to_file(byte_dict: dict, file_name='Sending/packets.txt'):
 
 
 def make_initial_req(file_name: str, packet_num, id):
-    return f'!fcom,file:r{file_name},packets:{packet_num},id:{id}'
+    return f'!fcom,file:{file_name},packets:{packet_num},id:{id}'
 
 def decode_initial_req(string: str):
     """Returns file_name, packet_num, and file id of request
