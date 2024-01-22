@@ -1,0 +1,6 @@
+meshtastic==2.1.6
+Pillow==10.1.0
+pydub==0.25.1
+Pypubsub==4.0.3
+pyserial==3.5
+tqdm==4.65.0
