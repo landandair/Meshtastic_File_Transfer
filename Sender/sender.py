@@ -5,9 +5,9 @@ Connect 2 Radios to the USB ports running meshtastic and then run the file. A pr
 100%|██████████| 36/36 [00:15<00:00,  2.32packet/s] - Short Fast(.4 sec sending delay) 300-500 bytes/sec
 """
 import os
-
-from serial.serialutil import SerialException
 import sys
+sys.path.append('..')
+from serial.serialutil import SerialException
 import time
 from meshtastic.serial_interface import SerialInterface
 from meshtastic.util import findPorts
