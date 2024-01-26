@@ -10,7 +10,7 @@ def main():
     buffer_size = 58_000
 
     fname = os.path.basename(file_name)
-    name, ext = fname.split('.')
+    name, ext = os.path.splitext(fname)
     dirname = os.path.dirname(file_name)
     new_dir_name = dirname + '/' + name
     os.makedirs(new_dir_name, exist_ok=True)
@@ -18,7 +18,7 @@ def main():
         buff = f.read(buffer_size)
         n = 1
         while buff:
-            with open(f'{new_dir_name}/{name}_{n}.{ext}', 'wb') as wf:
+            with open(f'{new_dir_name}/{name}_{n}{ext}', 'wb') as wf:
                 wf.write(buff)
             buff = f.read(buffer_size)
             n += 1

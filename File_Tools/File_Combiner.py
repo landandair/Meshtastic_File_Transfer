@@ -9,11 +9,11 @@ def main():
     order_dict = {}
     extension = None
     for file in files:
-        name, ext = file.split('.')
+        name, ext = os.path.splitext(file)
         extension = ext
         num = int(name.split('_')[-1])
         order_dict[num] = file
-    with open(dir_name + '.' + extension, 'wb') as wf:
+    with open(dir_name + extension, 'wb') as wf:
         for i in sorted(order_dict.keys()):
             with open(f'{dir_name}/{order_dict[i]}', 'rb') as rf:
                 wf.write(rf.read())
