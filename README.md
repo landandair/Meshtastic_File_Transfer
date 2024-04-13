@@ -1,6 +1,6 @@
 # Meshtastic_File_Transfer
 System which can be used to send arbitrary binary data files over Meshtastic of a size up to 
-59kb at a rate of about 50 bytes/s which is about as fast as a room full of people on morse code.
+59kb at a rate between 10-1000 bytes/s which is about as fast as a room full of people on morse code. The file size can be expanded by sending file chunks of a larger file which can be generated with tools in this repo.
 
 This method of communication can be used by any platform and makes use of a relatively simple but 
 reliable communication protocol as described below.
@@ -21,8 +21,8 @@ transmitting packet. This cycle will repeat until a com packet is missed or all 
 
 Also, the file ID number must never be byte(f) or 102 in base 10.
 #Instructions:Main_2way.py
-- Plug in 2 Radios into a computer
-- Type in the File name under 59kb in size located in the "Files" Folder into the file_name string
-- Run Main_2way.py
-- Make sure the number of radios is 2 in the console as this may take a while to be the case
+- Plug in 2 radios into one or two computers
+- Start the Receiver script with the desired cmd line args
+- Start the Sender script with the file or directory as a cmdline arg
+- Set the destination to the other radio when prompted
 - Progress Bar should show up and begin filling if everything is working properly
