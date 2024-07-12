@@ -1,4 +1,6 @@
 # Meshtastic_File_Transfer
+I'm no longer working on this project, if you want this project but with more features, consider checking out [meshtastic_chat_desktop](https://github.com/laneboyerre/meshtastic_chat_desktop) for which I'm a contributor
+
 System which can be used to send arbitrary binary data files over Meshtastic of a size up to 
 59kb at a rate between 10-1000 bytes/s which is about as fast as a room full of people on morse code. The file size can be expanded by sending file chunks of a larger file which can be generated with tools in this repo.
 
