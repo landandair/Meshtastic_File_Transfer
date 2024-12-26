@@ -7,7 +7,7 @@ import os
 def main():
     args = parser.parse_args()
     file_name = args.file_name
-    buffer_size = 58_000
+    buffer_size = 51_200
 
     fname = os.path.basename(file_name)
     name, ext = os.path.splitext(fname)

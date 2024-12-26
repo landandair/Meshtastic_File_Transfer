@@ -15,7 +15,8 @@ def main():
     except IndexError as e:
         print('not an audio file')
     try:
-        new_file = compress_image(file_name, quality_level)
+        if not new_file:
+            new_file = compress_image(file_name, quality_level)
     except IndexError as e:
         print('not an image file')
     if not new_file:
