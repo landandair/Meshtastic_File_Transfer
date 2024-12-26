@@ -1,10 +1,11 @@
+import os.path
 import random
 import file_classes
 from Packaging_Data import decode_initial_req
 
 
 class FileTransManager:
-    def __init__(self, interface, send_delay=7, packet_len=218, destination=None, auto_restart=False):
+    def __init__(self, interface, send_delay=7, packet_len=200, destination=None, auto_restart=False):
         self.transfer_objects = {}  # id: file_sender/file_receiver
         self.interface = interface
         self.send_delay = send_delay
@@ -25,13 +26,19 @@ class FileTransManager:
         for key in deleted_keys:
             finished = self.transfer_objects.pop(key)
             if not finished.finished:
-                result = input('retry?(y/n)>>')
+                if not self.restart:
+                    result = input('retry?(y/n)>>')
+                else:
+                    result = ""
                 if 'y' in result.lower() or self.restart:
+                    print('restarting ', finished.name)
                     self.file_list.insert(0, finished.name)
 
         if len(self.transfer_objects) == 0:
             if self.file_list:
-                self.send_new_file(self.file_list.pop(0), self.destination)
+                file = self.file_list.pop(0)
+                if os.path.exists(file) and self.destination:
+                    self.send_new_file(file, self.destination)
             else:
                 self.done = True
 
@@ -73,5 +80,5 @@ class FileTransManager:
         """Called to make new file sending object"""
         if destination:
             self.destination = destination
-        for file in file_names:
+        for file in sorted(file_names):
             self.file_list.append(file)
