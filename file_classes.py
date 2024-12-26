@@ -94,7 +94,7 @@ class FileTransferReceiver:
 class FileTransferSender:
     """Class used to communicate and send files with a desired target. Sends Initial Packet, receives ack packets and
     sends packets and a confirmation packet at the end."""
-    def __init__(self, file_name, file_id: int, interface, destination_id, send_delay=10, packet_len=218,
+    def __init__(self, file_name, file_id: int, interface, destination_id, send_delay=10, packet_len=200,
                  disable_bar=True):
         self.name = file_name
         self.id = file_id  # 0 Reserved for file meta packets
@@ -133,7 +133,7 @@ class FileTransferSender:
             self.interface.sendData(bytes(data), portNum=portnums_pb2.IP_TUNNEL_APP, destinationId=self.destination_id,
                                     wantAck=False)
             self.progress_bar.update()
-        elif time.time()-self.last_send >= self.delay*self.packet_num and time.time()-self.last_send >= self.min_delay:
+        elif time.time()-self.last_send >= self.delay*self.packet_num/4 and time.time()-self.last_send >= self.min_delay:
             print(time.time() - self.last_send)
             print('failed Send Timeout')
 
