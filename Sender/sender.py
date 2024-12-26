@@ -21,7 +21,7 @@ Queue = []
 def main(interface):
     args = parser.parse_args()
     # Args to be used
-    time_delay = int(args.time_delay)
+    time_delay = float(args.time_delay)
     use_dir = args.use_dir
     auto_restart = args.auto_restart
     size = 0
@@ -94,9 +94,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='Meshtastic File Sender',
         description='Sends a file or directory to another node running the receiver program',)
-    parser.add_argument('-t', '--time_delay', default=5, help='Time between sending packets')
-    parser.add_argument('-d', '--use_dir', default=False, help='Sends a directory of files instead')
-    parser.add_argument('-r', '--auto_restart', default=False, help='Automatically restart transfer upon '
+    parser.add_argument('-t', '--time_delay', default=5, type=float, help='Time between sending packets')
+    parser.add_argument('-d', '--use_dir', action='store_true', help='Sends a directory of files instead')
+    parser.add_argument('-r', '--auto_restart', action='store_true', help='Automatically restart transfer upon '
                                                                     'failure(good for large transfers)')
     parser.add_argument('-p', '--path', required=True, help='Path to find the file from(must be less than'
                                                             '59kb')
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     if ports:
         for port in ports:
             try:
-                interface = SerialInterface(devPath=port)
+                interface = SerialInterface(devPath='/dev/cu.usbserial-54760041581')
                 print(f'connected to {interface.getShortName()}')
                 break
             except (BlockingIOError, SerialException) as e:

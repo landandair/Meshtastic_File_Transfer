@@ -4,7 +4,7 @@ from Packaging_Data import decode_initial_req
 
 
 class FileTransManager:
-    def __init__(self, interface, send_delay=7, packet_len=232, destination=None, auto_restart=False):
+    def __init__(self, interface, send_delay=7, packet_len=218, destination=None, auto_restart=False):
         self.transfer_objects = {}  # id: file_sender/file_receiver
         self.interface = interface
         self.send_delay = send_delay
